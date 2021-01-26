@@ -1,0 +1,18 @@
+---
+- name: update web servers
+  hosts: webservers
+  serial: 1
+  tasks:
+  - name: ensure that apache is listening on the right port
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/lineinfile_module.html
+    lineinfile:
+      path: /etc/apache2/ports.conf
+      line: "Listen {{ http_port }}"
+    notify:
+    - Restart apache
+  handlers:
+  - name: Restart apache
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html
+    service:
+      name: apache2
+      state: restarted

@@ -1,0 +1,50 @@
+---
+- name: Publish content
+  hosts: webservers
+  serial: 1
+  tasks:
+  - name: Set subpage variables
+    set_fact:
+      subpages:
+        - a.html
+        - b.html
+        - c.html
+        - d.html
+  - name: Upload index.html
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html
+    template:
+      dest: /var/www/html/index.html
+      src: index.html.j2
+      mode: 0666
+  - name: Create directory for pictures
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html
+    file:
+      path: /var/www/html/images
+      state: directory
+      owner: www-data
+      group: www-data
+      mode: 0755
+  - name: Upload an image
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html
+    copy:
+      dest: /var/www/html/images/acme.png
+      src: acme.png
+      owner: www-data
+      group: www-data
+      mode: 0644
+  - name: Create subpages
+    template:
+      dest: "/var/www/html/{{ item }}"
+      src: subpage.html.j2
+    with_items:
+    - "{{ subpages }}"
+  - name: Create fruit color description
+    lineinfile:
+      dest: /tmp/fruitcolors.txt
+      create: yes
+      regex: "^{{ item.key}}'s"
+      line: "{{ item.key }}'s color is {{ item.value }}"
+    with_dict:
+      apple: red
+      banana: yellow
+      melon: green

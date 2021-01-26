@@ -1,0 +1,41 @@
+<html>
+<head>
+  <title>{{ company_name | upper }}</title>
+</head>
+<body>
+<img src="images/acme.png" />
+<h1>{{ company_name }}</h1>
+
+<p>Here's our magnificient infrastructure:</p>
+
+<p>Our webservers are:</p>
+<ul>
+{% for server in groups['webservers'] %}
+  <li>{{ server }}</li>
+{% endfor %}
+</ul>
+
+
+
+<p>Our database servers are:</p>
+<ul>
+{% for server in groups['databases'] %}
+  <li>{{ server }}</li>
+{% endfor %}
+</ul>
+
+<p>We have some other pages, too</p>
+<ul>
+{% for page in subpages %}
+  <li><a href="{{page}}">{{page}}</a></li>
+{% endfor %}
+</ul>
+
+<p>Secret information <a href="secret.html">here</a></p>
+
+{% if owner is defined %}
+<hr />
+<pre>This server is maintained by: {{ owner }}</pre>
+{% endif %}
+</body>
+</html>

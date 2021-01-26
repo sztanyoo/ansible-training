@@ -1,0 +1,8 @@
+---
+- name: Get host network configuration
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+  - name: Print IPv4 address
+    debug:
+      msg: "{{ ansible_all_ipv4_addresses }}"

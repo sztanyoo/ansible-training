@@ -1,0 +1,31 @@
+---
+- name: update web servers
+  hosts: webservers
+  serial: 1
+  tasks:
+  - name: ensure apache is at the latest version
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+    apt:
+      name: apache2
+      state: latest
+      # update_cache: yes
+    register: update_result
+
+  - name: Report update update result
+    debug:
+      msg: "{{ update_result }}"
+    tags:
+    - details
+  tags:
+  - webservers
+
+- name: update databasees
+  hosts: databases
+  serial: 1
+  tasks:
+  - name: ensure postgresql is at the latest version
+    apt:
+      name: postgresql
+      state: latest
+  tags:
+  - databases

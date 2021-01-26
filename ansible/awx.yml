@@ -1,0 +1,12 @@
+- hosts: localhost
+  become: true
+  vars:
+    admin_password: password
+  roles:
+  - geerlingguy.repo-epel
+  - geerlingguy.git
+  - geerlingguy.pip
+  - geerlingguy.ansible
+  - geerlingguy.docker
+  - geerlingguy.nodejs
+  - geerlingguy.awx

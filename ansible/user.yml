@@ -1,0 +1,36 @@
+---
+
+- name: Create some files as `root` user
+  hosts: localhost
+  become: yes
+  # by default this will be the root user
+  tasks:
+  - name: Create some files as root
+    copy:
+      dest: /tmp/root-users-file.txt
+      content: |
+        This is my secret, don't tell it anyone
+      mode: 0400
+  - name: Check my name
+    shell: "whoami"
+    register: my_name
+  - name: Print name
+    debug:
+      msg: "{{ my_name }}"
+
+- name: Create some files as `devops` user
+  hosts: localhost
+  become: yes
+  become_user: devops
+  tasks:
+  - name: Create some files as devops
+    file:
+      path: /tmp/devops-users-file.txt
+      state: touch
+  - name: Check my name
+    shell: "whoami"
+    register: my_name
+  - name: Print name
+    debug:
+      msg: "{{ my_name }}"
+

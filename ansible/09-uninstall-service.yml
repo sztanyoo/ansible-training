@@ -1,0 +1,24 @@
+---
+- name: uninstall web servers
+  hosts: webservers
+  serial: 1
+  tasks:
+  - name: ensure apache is not installed
+    apt:
+      name: apache2
+      state: absent
+      purge: yes
+  - name: remove web content
+    file:
+      path: /var/www/html
+      state: absent
+
+- name: uninstall databasees
+  hosts: databases
+  serial: 1
+  tasks:
+  - name: ensure postgresql is not installed
+    apt:
+      name: postgresql
+      state: absent
+      purge: yes

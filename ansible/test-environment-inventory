@@ -1,0 +1,13 @@
+webservers:
+  vars:
+    http_port: 5678
+    company_name: ACME Store
+  hosts:
+    foo.example.com:
+    bar.example.com:
+      owner: John Smith
+databases:
+  hosts:
+    one.example.com:
+    two.example.com:
+    three.example.com:
