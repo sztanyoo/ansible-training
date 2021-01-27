@@ -4,7 +4,8 @@ set -x
 
 apt-update
 apt install -y ansible \
-               net-tools
+               net-tools \
+               python3-pip
 
 # Single machine will simulate multiple hosts
 sed -i 's/^127.0.0.1.*/\0 foo.example.com bar.example.com one.example.com two.example.com three.example.com/' /etc/hosts
@@ -28,5 +29,9 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.27.3/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
+pip3 install docker compose docker-compose
+
+git clone https://github.com/ansible/awx.git
+git clone
 
 wall "Bootstrap ready"

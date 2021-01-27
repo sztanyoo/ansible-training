@@ -11,7 +11,7 @@
       # update_cache: yes
     register: update_result
 
-  - name: Report update update result
+  - name: Report update result
     debug:
       msg: "{{ update_result }}"
     tags:
